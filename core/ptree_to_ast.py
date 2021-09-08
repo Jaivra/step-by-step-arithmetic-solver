@@ -2,17 +2,11 @@ from fractions import Fraction
 
 from liblet import AnnotatedTreeWalker, Tree
 
+from core.config import PRIORITY
 from core.util import *
 
 arith2ast = AnnotatedTreeWalker('name')
 
-PRIORITY = {
-    'powExpr': 5,
-    'fractExpr': 3,
-    'unaryExpr': 4,
-    'divProdExpr': 2,
-    'addSubExpr': 1
-}
 
 def exec(ptree):
     return arith2ast(ptree)
