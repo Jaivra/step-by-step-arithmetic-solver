@@ -12,7 +12,6 @@ expr
    | (PLUS | MINUS) expr                  # unaryExpr
    | expr (TIMES | DIV) expr              # divProdExpr
    | expr (PLUS | MINUS) expr             # addSubExpr
-   | ROUND_L_BRACK expr ROUND_R_BRACK     # roundBlockExpr
    | CURLY_L_BRACK expr CURLY_R_BRACK     # curlyBlockExpr
    | SQUARE_L_BRACK expr SQUARE_R_BRACK   # squareBlockExpr
    | ROUND_L_BRACK expr ROUND_R_BRACK     # roundBlockExpr
