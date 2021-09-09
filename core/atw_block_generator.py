@@ -6,9 +6,6 @@ from core.block_depth import BlockDepth
 from core.my_atw import MyAtw
 from core.util import *
 
-atw_blocks = AnnotatedTreeWalker('type', AnnotatedTreeWalker.RECOURSE_CHILDREN)
-
-
 
 class AtwBlockGenerator(MyAtw):
 

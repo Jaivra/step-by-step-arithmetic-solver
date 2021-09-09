@@ -41,12 +41,13 @@ class AtwEvalExpr(MyAtw):
         left, right = self(left), self(right)
         return AtwEvalExpr.ARITH_OP[op](left, right)
 
-
     @check_type
     def _atw_divProdExpr(self, ast):
         left, right = ast.children
         op = ast.root['op']
         left, right = self(left), self(right)
+        if op == ':' and right == 0:
+            raise Exception(f'Division by 0 --> {left}:{right}')
         return AtwEvalExpr.ARITH_OP[op](left, right)
 
 

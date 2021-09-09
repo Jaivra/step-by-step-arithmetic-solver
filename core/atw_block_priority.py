@@ -7,9 +7,6 @@ from core.config import PRIORITY
 from core.my_atw import MyAtw
 from core.util import *
 
-atw_prior = AnnotatedTreeWalker('type')
-
-
 class AtwBlockPriority(MyAtw):
     def __init__(self):
         super().__init__('type')

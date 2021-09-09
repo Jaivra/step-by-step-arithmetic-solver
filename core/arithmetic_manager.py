@@ -10,6 +10,7 @@ from core.atw_block_priority import AtwBlockPriority
 class ArithManager:
 
     def __init__(self):
+        print("*")
         self._atw_ptree_to_ast = AtwPtreeToAst()
         self._atw_block_generator = AtwBlockGenerator()
         self._atw_latex_formatter = AtwLatexFormatter()

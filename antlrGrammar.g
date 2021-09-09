@@ -5,7 +5,7 @@ s : expr EOF;
 
 
 
-expr                                                      // TODO: parentesizzazione semplice efficiente
+expr
    : (PLUS | MINUS)? (INT|RAT|REAL)   # atomExpr
    | <assoc=right>expr POW expr           # powExpr
    | expr FRACT expr                      # FractExpr
