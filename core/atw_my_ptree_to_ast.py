@@ -94,9 +94,10 @@ class AtwPtreeToAst(MyAtw):
     def _atw_F(self, ptree):
         if len(ptree.children) == 1: return self(ptree.children[0])
         subexpr = self(ptree.children[1])
-        if is_container(subexpr) or is_atom(subexpr):
-            return subexpr
+
         parent = ptree.children[0].root['name']
+        if is_container(subexpr) or is_atom(subexpr) or parent == '<':
+            return subexpr
         if parent == '(':
             parent_type = 'roundBlockExpr'
         elif parent == '[':
