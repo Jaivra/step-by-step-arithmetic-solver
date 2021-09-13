@@ -84,6 +84,7 @@ class AtwBlockPriority(MyAtw):
     def _atw_unaryExpr(self, ast):
         if is_calculable(ast):
             ast.root['_calc'] = 'next'
+            ast.root['priority'] = 0
             return None
         par = self(ast.children[0])
         ast.root['priority'] = max(PRIORITY['unaryExpr'], ast.children[0].root['priority'])

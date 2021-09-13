@@ -18,7 +18,6 @@ class AtwEvalExpr(MyAtw):
         '/': Fraction
     }
 
-
     def __init__(self):
         super().__init__('type')
         self.MEMORY = {}
@@ -29,7 +28,6 @@ class AtwEvalExpr(MyAtw):
 
     def _atw_atomExpr(self, ast):
         return ast.root['value']
-
 
     def _atw_subExpr(self, ast):
         return self.MEMORY[ast.root['ID']].root['value']
@@ -50,7 +48,6 @@ class AtwEvalExpr(MyAtw):
             raise Exception(f'Division by 0 --> {left}:{right}')
         return AtwEvalExpr.ARITH_OP[op](left, right)
 
-
     @check_type
     def _atw_powExpr(self, ast):
         left, right = ast.children
@@ -61,20 +58,19 @@ class AtwEvalExpr(MyAtw):
             value = float(pow(left, right))
         return value
 
-
     def _atw_unaryExpr(self, ast):
         value = self(ast.children[0])
         if ast.root['op'] == '-':
             value = -value
         return value
 
-
     @check_type
     def _atw_fractExpr(self, ast):
         left, right = ast.children
         left, right = self(left), self(right)
+        if isinstance(left, float) or isinstance(right, float):
+            return left / right
         return Fraction(left, right)
-
 
     def _atw_main(self, ast):
         return self(ast.children[0])

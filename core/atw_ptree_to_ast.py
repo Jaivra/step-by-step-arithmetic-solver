@@ -61,9 +61,10 @@ class AtwPtreeToAst(MyAtw):
     def _atw_unaryExpr(self, ptree):
         op, subexpr = ptree.children
         subexpr = self(subexpr)
+        if op.root['value'] == '+':
+            return subexpr
 
         priority = max(PRIORITY['unaryExpr'], subexpr.root['priority'])
-
         return Tree({'type': 'unaryExpr', 'op': op.root['value'], 'priority': priority}, [subexpr])
 
     def _atw_fractExpr(self, ptree):
