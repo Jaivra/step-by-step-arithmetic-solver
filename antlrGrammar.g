@@ -6,7 +6,7 @@ s : expr EOF;
 
 
 expr
-   : (PLUS | MINUS)? (INT|RAT|REAL)       # atomExpr
+   : (PLUS | MINUS)?(INT|RAT|REAL)       # atomExpr
    | <assoc=right>expr POW expr           # powExpr
    | expr FRACT expr                      # FractExpr
    | (PLUS | MINUS) expr                  # unaryExpr

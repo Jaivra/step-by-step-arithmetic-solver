@@ -1,4 +1,5 @@
 from fractions import Fraction
+import re
 
 from IPython.core.display import display, Latex
 from liblet import Tree
@@ -40,3 +41,14 @@ def check_type(f):
         return int(res)
 
     return check_type_aux
+
+def is_integer(token):
+    return re.match(r'-?[0-9]+$', token)
+
+
+def is_rational(token):
+    return re.match('-?[0-9]+/[0-9]+$', token)
+
+
+def is_float(token):
+    return re.match(r'-?[0-9]+\.[0-9]+$', token)

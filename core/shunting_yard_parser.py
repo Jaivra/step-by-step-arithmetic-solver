@@ -49,24 +49,34 @@ class ShuntingYardParser:
             return Tree({'type': 'powExpr', 'priority': priority}, [left, right])
 
     def parse(self, expr):
+
         clean_expr = expr.split()
         tokens = list(clean_expr)
         last_token = None
+
         while tokens:
             token = tokens[0]
-            if token == '+' and last_token in set(self.operators.keys() | {'<', '(', '[', '{'}):
+
+            if token == '+' and last_token in set(self.operators.keys() | {'<', '(', '[', '{', None}):
                 tokens = tokens[1:]
                 continue
 
-            if token == '-' and last_token in set(self.operators.keys() | {'<', '(', '[', '{'}): token = token * 2
+            if token == '-' and last_token in set(self.operators.keys() | {'<', '(', '[', '{', None}):
+                if tokens[1][0].isdigit():
+                    tokens[1] = f'-{tokens[1]}'
+                    tokens = tokens[1:]
+                    continue
+                token = token * 2
 
-            if token.isdigit():  # integer atom
+            if is_integer(token):  # integer atom
                 atom = Tree({'type': 'atomExpr', 'value': int(token), 'priority': 0})
                 self.operand_st.push(atom)
-            elif re.match(r'[0-9]+\.[0-9]+$', token):
+
+            elif is_float(token):
                 atom = Tree({'type': 'atomExpr', 'value': float(token), 'priority': 0})
                 self.operand_st.push(atom)
-            elif re.match('[0-9]+/[0-9]+$', token):  # rational atom
+
+            elif is_rational(token):  # rational atom
                 num, den = token.split('/')
                 atom = Tree({'type': 'atomExpr', 'value': Fraction(int(num), int(den)), 'priority': 0})
                 self.operand_st.push(atom)
@@ -86,8 +96,10 @@ class ShuntingYardParser:
                         node = self._generate_un_op_node(self.operator_st.pop(), self.operand_st.pop())
                     self.operand_st.push(node)
                 self.operator_st.push(token)
+
             elif token in {'(', '<', '[', '{'}:
                 self.operator_st.push(token)
+
             elif token in {')', ']', '}'}:
                 if token == ')':
                     open_brack = '('
