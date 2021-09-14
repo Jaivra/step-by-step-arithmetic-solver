@@ -1,21 +1,7 @@
-from textwrap import dedent, indent
+from core.util import *
 
-from liblet import (
-    Production,
-    Grammar,
-    Derivation,
-    ProductionGraph,
-    TopDownInstantaneousDescription,
-    Stack,
-    Table,
-    Tree,
-    closure,
-    warn,
-    show_calls,
-    union_of,
-    dod2table,
-    dict2table,
-    suffixes,
-    ε, HASH,
-    __version__)
+@check_type
+def tmp():
+    return 0.0
 
+print(type(tmp()))

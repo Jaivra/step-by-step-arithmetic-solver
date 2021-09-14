@@ -5,12 +5,14 @@ from core.atw_latex_formatter import AtwLatexFormatter
 from core.atw_ptree_to_ast import AtwPtreeToAst
 from core.atw_expr_eval import AtwEvalExpr
 from core.atw_block_priority import AtwBlockPriority
+from core.shunting_yard_parser import ShuntingYardParser
 
 
 class ArithManager:
 
     def __init__(self):
         self._atw_ptree_to_ast = AtwPtreeToAst()
+        self._shunting_yard_parser = ShuntingYardParser()
         self._atw_block_generator = AtwBlockGenerator()
         self._atw_latex_formatter = AtwLatexFormatter()
         self._atw_block_priority = AtwBlockPriority()
@@ -21,8 +23,12 @@ class ArithManager:
             arith = ANTLR(reader.read())
             return arith.tree(expr, 's')
 
+
     def ptree2ast(self, ptree):
         return self._atw_ptree_to_ast(ptree)
+
+    def shuntingYardExpr2ast(self, expr):
+        return self._shunting_yard_parser.parse(expr)
 
     def blocks(self, ast):
         return self._atw_block_generator.start(ast)

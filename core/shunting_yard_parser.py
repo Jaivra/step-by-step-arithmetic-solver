@@ -29,6 +29,7 @@ class ShuntingYardParser:
         def generate_un_op_node(op, subexpr):
             if op == '++': return subexpr
 
+            # nel caso del meno unario ci serve una sola sottoespressione
             if op == '--':
                 priority = max(PRIORITY['unaryExpr'], subexpr.root['priority'])
                 return Tree({'type': 'unaryExpr', 'op': op[0], 'priority': priority}, [subexpr])
@@ -50,7 +51,7 @@ class ShuntingYardParser:
                 priority = max(PRIORITY['powExpr'], left.root['priority'], right.root['priority'])
                 return Tree({'type': 'powExpr', 'priority': priority}, [left, right])
 
-        if self.operators[self.operator_st.peek()].type == 'bin':
+        if self.operators[self.operator_st.peek()].type == 'bin': # controlla il tipo di operatore
             right, left = self.operand_st.pop(), self.operand_st.pop()
             node = generate_bin_op_node(self.operator_st.pop(), left, right)
         else:
@@ -64,10 +65,7 @@ class ShuntingYardParser:
         tokens = list(clean_expr)
         last_token = None
 
-
-
-
-        while tokens:
+        while tokens: # O(n)
             token = tokens[0]
 
             if token == '+' and last_token in set(self.operators.keys() | {'<', '(', '[', '{', None}): # ignore + unary
@@ -108,7 +106,7 @@ class ShuntingYardParser:
             elif token in {'(', '<', '[', '{'}:
                 self.operator_st.push(token)
 
-            elif token in {')', ']', '}'}:
+            elif token in {')', ']', '}'}: # controlla se è finito un blocco
                 if token == ')':
                     open_brack = '('
                     bracket_type = 'roundBlockExpr'
@@ -127,7 +125,7 @@ class ShuntingYardParser:
                     self.operand_st.push(block)
                 self.operator_st.pop()
 
-            elif token == '>':
+            elif token == '>': #
                 while self.operator_st.peek() != '<':
                     self.operand_st.push(self.generate_op_node())
                 self.operator_st.pop()

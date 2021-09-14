@@ -14,7 +14,7 @@ class AtwEvalExpr(MyAtw):
         '+': add,
         '-': sub,
         'x': mul,
-        ':': Fraction,
+        ':': truediv,
         '/': Fraction
     }
 
@@ -45,7 +45,7 @@ class AtwEvalExpr(MyAtw):
         op = ast.root['op']
         left, right = self(left), self(right)
         if op == ':' and right == 0:
-            raise Exception(f'Division by 0 --> {left}:{right}')
+            raise ZeroDivisionError(f'Division by 0 --> {left}:{right}')
         return AtwEvalExpr.ARITH_OP[op](left, right)
 
     @check_type
