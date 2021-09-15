@@ -61,8 +61,9 @@ class ShuntingYardParser:
 
 
     def parse(self, expr):
-        reg = re.compile(r'\d+|[^ 0-9]')
-        tokens = re.findall(reg, expr)
+        tokenizer_reg = '[-|+]+\d+?/\d+(?!\^|\.|\d)|\d+(?!\.)/\d+(?!\.)|[-|+]+\d+(?:\.\d+)?(?!\^|\.|\d|/)|\d+(?:\.\d+)?|[^ 0-9|\.]'
+        tokens = re.findall(tokenizer_reg, expr)
+        print("*****",tokens)
         last_token = None
 
         while tokens: # O(n)

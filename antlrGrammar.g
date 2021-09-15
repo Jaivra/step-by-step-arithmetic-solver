@@ -8,7 +8,7 @@ s : expr EOF;
 expr
    : <assoc=right>expr POW expr           # powExpr
    | (PLUS | MINUS) expr                  # unaryExpr
-   | (PLUS | MINUS)? (INT|RAT|REAL)       # atomExpr
+   | (PLUS | MINUS)? (REAL|RAT|INT)       # atomExpr
    | expr FRACT expr                      # FractExpr
    | expr (TIMES | DIV) expr              # divProdExpr
    | expr (PLUS | MINUS) expr             # addSubExpr

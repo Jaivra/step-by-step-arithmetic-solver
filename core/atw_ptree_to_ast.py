@@ -63,6 +63,8 @@ class AtwPtreeToAst(MyAtw):
         subexpr = self(subexpr)
         if op.root['value'] == '+':
             return subexpr
+        if is_atom(subexpr):
+            return Tree({'type': 'atomExpr', 'value': -subexpr.root['value'], 'priority': 0}, [])
 
         priority = max(PRIORITY['unaryExpr'], subexpr.root['priority'])
         return Tree({'type': 'unaryExpr', 'op': op.root['value'], 'priority': priority}, [subexpr])
