@@ -6,10 +6,10 @@ s : expr EOF;
 
 
 expr
-   : (PLUS | MINUS)? (INT|RAT|REAL)       # atomExpr
-   | <assoc=right>expr POW expr           # powExpr
-   | expr FRACT expr                      # FractExpr
+   : <assoc=right>expr POW expr           # powExpr
    | (PLUS | MINUS) expr                  # unaryExpr
+   | (PLUS | MINUS)? (INT|RAT|REAL)       # atomExpr
+   | expr FRACT expr                      # FractExpr
    | expr (TIMES | DIV) expr              # divProdExpr
    | expr (PLUS | MINUS) expr             # addSubExpr
    | CURLY_L_BRACK expr CURLY_R_BRACK     # curlyBlockExpr

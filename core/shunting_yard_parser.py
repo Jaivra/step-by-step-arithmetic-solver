@@ -61,8 +61,8 @@ class ShuntingYardParser:
 
 
     def parse(self, expr):
-        clean_expr = expr.split()
-        tokens = list(clean_expr)
+        reg = re.compile(r'\d+|[^ 0-9]')
+        tokens = re.findall(reg, expr)
         last_token = None
 
         while tokens: # O(n)
@@ -73,10 +73,10 @@ class ShuntingYardParser:
                 continue
 
             if token == '-' and last_token in set(self.operators.keys() | {'<', '(', '[', '{', None}): # - unary
-                if tokens[1][0].isdigit(): # if - is part of number
-                    tokens[1] = f'-{tokens[1]}'
-                    tokens = tokens[1:]
-                    continue
+                # if tokens[1][0].isdigit(): # if - is part of number
+                #     tokens[1] = f'-{tokens[1]}'
+                #     tokens = tokens[1:]
+                #     continue
                 token = token * 2
 
             if is_integer(token):  # integer atom

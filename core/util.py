@@ -42,6 +42,11 @@ def check_type(f):
 
     return check_type_aux
 
+
+def is_negative_number(token):
+    return token[0] == '-' and (is_integer(token) or is_rational(token) or is_float(token))
+
+
 def is_integer(token):
     return re.match(r'-?[0-9]+$', token)
 

@@ -47,8 +47,9 @@ def generate_expression(prob):
             left = generate_expression(prob / 1.2)
             if randint(0, 2) == 0:
                 return UnaryExpression(left, '-')
-            op = choice(["+", "-", "x",":", "/", '^'])
-            if op == '^': right = 2
+            op = choice(["+", "-", "x",'^'])
+            #op = choice(["+", "-", "x",":", "/", '^'])
+            if op == '^': right = 2 if randint(0, 1) == 0 else -2
             else: right = generate_expression(prob / 1.2)
             return BinaryExpression(left, op, right)
     return str(generate_expression_aux(prob))
