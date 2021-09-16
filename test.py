@@ -1,7 +1,3 @@
-from core.util import *
+from antlr4 import TokenStream
 
-@check_type
-def tmp():
-    return 0.0
 
-print(type(tmp()))

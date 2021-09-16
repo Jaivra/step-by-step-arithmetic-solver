@@ -8,8 +8,8 @@ s : expr EOF;
 expr
    : <assoc=right>expr POW expr           # powExpr
    | (PLUS | MINUS) expr                  # unaryExpr
-   | (PLUS | MINUS)? (REAL|RAT|INT)       # atomExpr
-   | expr FRACT expr                      # FractExpr
+   | (PLUS | MINUS)? (INT|REAL|RAT)       # atomExpr
+   | expr FRACT expr                      # fractExpr
    | expr (TIMES | DIV) expr              # divProdExpr
    | expr (PLUS | MINUS) expr             # addSubExpr
    | CURLY_L_BRACK expr CURLY_R_BRACK     # curlyBlockExpr
@@ -60,6 +60,4 @@ POINT  : '.' ;
 POW    : '^' ;
 FRACT  : '/' ;
 
-WS
-   : [ \r\n\t] + -> skip
-   ;
+WS: [ \t\n\r]+ -> skip ;

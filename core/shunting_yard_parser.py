@@ -3,7 +3,7 @@ import re
 
 from liblet import Stack, Tree
 
-from core.config import PRIORITY
+from core.config import *
 from core.util import *
 
 
@@ -61,9 +61,7 @@ class ShuntingYardParser:
 
 
     def parse(self, expr):
-        tokenizer_reg = '[-|+]+\d+?/\d+(?!\^|\.|\d)|\d+(?!\.)/\d+(?!\.)|[-|+]+\d+(?:\.\d+)?(?!\^|\.|\d|/)|\d+(?:\.\d+)?|[^ 0-9|\.]'
-        tokens = re.findall(tokenizer_reg, expr)
-        print("*****",tokens)
+        tokens = tokenize(expr)
         last_token = None
 
         while tokens: # O(n)
@@ -74,21 +72,27 @@ class ShuntingYardParser:
                 continue
 
             if token == '-' and last_token in set(self.operators.keys() | {'<', '(', '[', '{', None}): # - unary
-                # if tokens[1][0].isdigit(): # if - is part of number
-                #     tokens[1] = f'-{tokens[1]}'
-                #     tokens = tokens[1:]
-                #     continue
+                if tokens[1][0].isdigit(): # if - is part of number
+                    tokens[1] = f'-{tokens[1]}'
+                    tokens = tokens[1:]
+                    continue
                 token = token * 2
 
             if is_integer(token):  # integer atom
+                minus_count = token.count('-')
+                token = ('' if minus_count % 2 == 0 else '-') + token.replace('-', '').replace('+', '')
                 atom = Tree({'type': 'atomExpr', 'value': int(token), 'priority': 0})
                 self.operand_st.push(atom)
 
             elif is_float(token):
+                minus_count = token.count('-')
+                token = ('' if minus_count % 2 == 0 else '-') + token.replace('-', '').replace('+', '')
                 atom = Tree({'type': 'atomExpr', 'value': float(token), 'priority': 0})
                 self.operand_st.push(atom)
 
             elif is_rational(token):  # rational atom
+                minus_count = token.count('-')
+                token = ('' if minus_count % 2 == 0 else '-') + token.replace('-', '').replace('+', '')
                 num, den = token.split('/')
                 atom = Tree({'type': 'atomExpr', 'value': Fraction(int(num), int(den)), 'priority': 0})
                 self.operand_st.push(atom)

@@ -48,12 +48,21 @@ def is_negative_number(token):
 
 
 def is_integer(token):
-    return re.match(r'[-|+]*\d+$', token)
+    # return re.match(r'[-|+]*\d+$', token)
+    return re.match(r'\d+$', token)
 
 
 def is_rational(token):
-    return re.match(r'[-|+]*\d+(?:\.\d+)?/\d+(?:\.\d+)?$', token)
+    # return re.match(r'[-|+]*\d+(?:\.\d+)?/\d+(?:\.\d+)?$', token)
+    return re.match(r'\d+(?:\.\d+)?/\d+(?:\.\d+)?$', token)
 
 
 def is_float(token):
-    return re.match(r'-?[0-9]+\.[0-9]+$', token)
+    # return re.match(r'-?[0-9]+\.[0-9]+$', token)
+    return re.match(r'[0-9]+\.[0-9]+$', token)
+
+
+def tokenize(expr):
+    reg = r"(\b\d+[\.]?\d*\b|[\(\)\+\*\-\/])"
+    return re.findall(reg, ''.join(expr.split()))
+
