@@ -14,8 +14,7 @@ class AtwEvalExpr(MyAtw):
         '+': add,
         '-': sub,
         'x': mul,
-        ':': Fraction,
-        '/': Fraction
+        ':': Fraction
     }
 
     def __init__(self):
@@ -41,22 +40,28 @@ class AtwEvalExpr(MyAtw):
 
     @check_type
     def _atw_divProdExpr(self, ast):
+
         left, right = ast.children
         op = ast.root['op']
         left, right = self(left), self(right)
-        if op == ':' and right == 0:
-            raise ZeroDivisionError(f'Division by 0 --> {left}:{right}')
-
-        return AtwEvalExpr.ARITH_OP[op](left, right)
+        if op == ':':
+            if right == 0: raise ZeroDivisionError(f'Division by 0 --> {left}:{right}')
+            elif isinstance(left, float) or isinstance(right, float): value = left / right
+            else: value = Fraction(left, right)
+        else:
+            value = left * right
+        return value
 
     @check_type
     def _atw_powExpr(self, ast):
         left, right = ast.children
         left, right = self(left), self(right)
-        if isinstance(left, int) and isinstance(right, int):
-            value = int(pow(left, right)) if right > 0 else Fraction(1, pow(left, -right))
+        if not isinstance(left, float) and not isinstance(right, float):
+#            value = int(pow(left, right)) if right > 0 else Fraction(1, pow(left, -right))
+            value = pow(left, right) if right > 0 else Fraction(1, pow(left, -right))
         else:
-            value = float(pow(left, right))
+            value = pow(left, right)
+        #     value = float(pow(left, right))
         return value
 
     def _atw_unaryExpr(self, ast):

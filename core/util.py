@@ -32,12 +32,13 @@ def block2ast(main_block, memory):
 
 
 def check_type(f):
+
     def check_type_aux(*x):
         res = f(*x)
         if isinstance(res, Fraction) and res.denominator != 1:
             return res
         if isinstance(res, float) and not res.is_integer():
-            return round(res, 3)
+            return round(res, 5)
         return int(res)
 
     return check_type_aux
@@ -63,6 +64,6 @@ def is_float(token):
 
 
 def tokenize(expr):
-    reg = r"(\b\d+[\.]?\d*\b|[\(\)\+\*\-\/])"
+    reg = r'\d+(?:\.\d+)?|[^ 0-9|\.]'
     return re.findall(reg, ''.join(expr.split()))
 

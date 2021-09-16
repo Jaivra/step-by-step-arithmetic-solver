@@ -3,7 +3,8 @@ PRIORITY = {
     'fractExpr': 4,
     'unaryExpr': 3,
     'divProdExpr': 2,
-    'addSubExpr': 1
+    'addSubExpr': 1,
+    'atomExpr': 0
 }
 
 
