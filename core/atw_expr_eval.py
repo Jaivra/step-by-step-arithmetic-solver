@@ -56,7 +56,7 @@ class AtwEvalExpr(MyAtw):
     def _atw_powExpr(self, ast):
         left, right = ast.children
         left, right = self(left), self(right)
-        if not isinstance(left, float) and not isinstance(right, float):
+        if not isinstance(left, float) and isinstance(right, int):
 #            value = int(pow(left, right)) if right > 0 else Fraction(1, pow(left, -right))
             value = pow(left, right) if right > 0 else Fraction(1, pow(left, -right))
         else:
