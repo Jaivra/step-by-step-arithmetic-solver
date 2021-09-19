@@ -32,10 +32,10 @@ class ShuntingYardParser:
         "-": OperatorInfo(0, "L", "B"),
         ":": OperatorInfo(1, "L", "B"),
         "x": OperatorInfo(1, "L", "B"),
-        "++": OperatorInfo(5, "R", "U"),  # unconsidered
-        "--": OperatorInfo(5, "R", "U"),
-        "/": OperatorInfo(3, "L", "B"),
-        "^": OperatorInfo(6, "R", "B"),
+        "++": OperatorInfo(3, "R", "U"),  # unconsidered
+        "--": OperatorInfo(3, "R", "U"),
+        "/": OperatorInfo(2, "L", "B"),
+        "^": OperatorInfo(4, "R", "B"),
         "#": OperatorInfo(-1, '', 'S')
     }
     SENTINEL = '#'
