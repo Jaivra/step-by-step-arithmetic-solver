@@ -1,1 +1,1 @@
-# let_project
+# Progetto di Linguaggi e Traduttori Valerio Cislaghi
