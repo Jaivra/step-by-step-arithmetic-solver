@@ -35,7 +35,7 @@ class ShuntingYardParser:
         "++": OperatorInfo(5, "R", "U"),  # unconsidered
         "--": OperatorInfo(5, "R", "U"),
         "/": OperatorInfo(3, "L", "B"),
-        "^": OperatorInfo(4, "R", "B"),
+        "^": OperatorInfo(6, "R", "B"),
         "#": OperatorInfo(-1, '', 'S')
     }
     SENTINEL = '#'
@@ -97,6 +97,7 @@ class ShuntingYardParser:
         simple_tokens = []
         unary = True
 
+
         for token in all_tokens:
             if unary and token in {'+', '-'}:
                 simple_tokens.append(token * 2)
@@ -123,7 +124,6 @@ class ShuntingYardParser:
                 self.operator_st.push(self.SENTINEL)
                 E()
                 close_par = tokens.pop()
-                print("close", close_par)
                 if close_par == ')':
                     self.operand_st.push(Tree({'type': 'roundBlockExpr', 'priority': 0}, [self.operand_st.pop()]))
                 elif close_par == ']':
