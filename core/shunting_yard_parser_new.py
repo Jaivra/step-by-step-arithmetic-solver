@@ -32,9 +32,9 @@ class ShuntingYardParser:
         "-": OperatorInfo(0, "L", "B"),
         ":": OperatorInfo(1, "L", "B"),
         "x": OperatorInfo(1, "L", "B"),
+        "/": OperatorInfo(2, "L", "B"),
         "++": OperatorInfo(3, "R", "U"),  # unconsidered
         "--": OperatorInfo(3, "R", "U"),
-        "/": OperatorInfo(2, "L", "B"),
         "^": OperatorInfo(4, "R", "B"),
         "#": OperatorInfo(-1, '', 'S')
     }
@@ -96,7 +96,6 @@ class ShuntingYardParser:
         all_tokens = tokenize(expr)
         simple_tokens = []
         unary = True
-
 
         for token in all_tokens:
             if unary and token in {'+', '-'}:

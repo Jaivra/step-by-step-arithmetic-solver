@@ -21,12 +21,6 @@ class ArithManager:
         self._atw_block_priority = AtwBlockPriority()
         self._atw_eval_expr = AtwEvalExpr()
 
-    def tmp(self, grammar_file, expr):
-        with open(grammar_file, 'r') as reader:
-            expr = ' '.join(tokenize(expr))
-            arith = ANTLR(reader.read())
-            return arith.tokens(expr)
-
     def ptree(self, grammar_file, expr):
         with open(grammar_file, 'r') as reader:
             expr = ' '.join(tokenize(expr))
