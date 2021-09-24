@@ -159,6 +159,8 @@ class ShuntingYardParser:
                     self.operand_st.push(Tree({'type': 'squareBlockExpr', 'priority': 0}, [self.operand_st.pop()]))
                 elif token == '{' and close_par == '}':
                     self.operand_st.push(Tree({'type': 'curlyBlockExpr', 'priority': 0}, [self.operand_st.pop()]))
+                elif token == '<' and close_par == '>':
+                    ...
                 else:
                     print(tokens_st.last_count)
                     raise MalformedExpression(

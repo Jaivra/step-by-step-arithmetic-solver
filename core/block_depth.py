@@ -3,39 +3,43 @@ import itertools
 from core.MalformedExpression import MalformedExpression
 
 
-class BlockDepth:
+class BLOCK_TYPE:
     ROUND = 3
     SQUARE = 2
     CURLY = 1
     INIT = 0
+
+class PARENTH_TYPE:
+    SIMPLE = 0
+    FREE = 1
+
+class BlockDepth:
+
     _count = itertools.count(0)
 
-    SIMPLE = 1
-    FREE = 2
 
-    def __init__(self, block_type=INIT, depth=0, pos=0):
+    def __init__(self, block_type=BLOCK_TYPE.INIT, depth=0, pos=0):
         self._block_type = block_type
         self._depth = depth
         self._pos = pos
-        if block_type == BlockDepth.ROUND: self._parenth_type = BlockDepth.FREE
-        else: self._parenth_type = BlockDepth.SIMPLE
+
+
 
     def add_block(self, block_type):
         def block_type_to_str(block_type):
-            TAB = {BlockDepth.ROUND: 'Tonda',
-                   BlockDepth.SQUARE: 'Quadra',
-                   BlockDepth.CURLY: 'Graffa',
+            TAB = {BLOCK_TYPE.ROUND: 'Tonda',
+                   BLOCK_TYPE.SQUARE: 'Quadra',
+                   BLOCK_TYPE.CURLY: 'Graffa',
                    }
             return TAB[block_type]
 
         depth = self._depth
-        if self._block_type == block_type == self.ROUND:
+        if self._block_type == block_type == BLOCK_TYPE.ROUND:
             depth += 1
         elif self._block_type >= block_type:
             raise MalformedExpression(
                 'Errore nell\'annidamento delle parentesi, regole di parentesizzazione non rispettate, ' +
-                'non puoi inserire una parentesi ' + block_type_to_str(
-                    block_type) + ' in una parentesi ' + block_type_to_str(self._block_type),
+                'non puoi inserire una parentesi ' + block_type_to_str(block_type) + ' in una parentesi ' + block_type_to_str(self._block_type),
                 [],
                 [],
                 []
