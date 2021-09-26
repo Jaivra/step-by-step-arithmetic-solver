@@ -42,10 +42,6 @@ class ExprBlock:
         parenth_types = set(block.parenth_type for block in sub_blocks)
         parenth_types_without_unknown = parenth_types - {PARENTH_TYPE.UNKNOWN}
 
-        #print('****', (self._parenth_type, self._tree), '\n\n')
-        #for block in self._sub_blocks:
-        #    print((block.parenth_type, block.tree), '\n')
-        #print('\n\n\n\n')
 
         if len(parenth_types_without_unknown) <= 1:
             if self._block_type == BLOCK_TYPE.INIT:

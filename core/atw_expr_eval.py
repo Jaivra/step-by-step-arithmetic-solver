@@ -1,4 +1,4 @@
-from ignore.my_atw import MyAtw
+from core.my_atw import MyAtw
 from core.util import *
 
 from operator import add, mul, sub

@@ -1,7 +1,7 @@
 from liblet import Stack
 
 from core.expr_block import ExprBlock, BLOCK_TYPE
-from ignore.my_atw import MyAtw
+from core.my_atw import MyAtw
 from core.util import *
 
 

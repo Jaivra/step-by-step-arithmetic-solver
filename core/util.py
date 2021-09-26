@@ -38,7 +38,7 @@ def check_type(f):
         if isinstance(res, Fraction) and res.denominator != 1:
             return res
         if isinstance(res, float) and not res.is_integer():
-            return round(res, 3)
+            return res #round(res, 3)
         return int(res)
 
     return check_type_aux

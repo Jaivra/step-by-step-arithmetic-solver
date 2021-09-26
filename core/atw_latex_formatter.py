@@ -1,4 +1,4 @@
-from ignore.my_atw import MyAtw
+from core.my_atw import MyAtw
 from fractions import Fraction
 
 
@@ -16,9 +16,11 @@ class AtwLatexFormatter(MyAtw):
     def _atw_atomExpr(self, ast):
         res = str(ast.root['value'])
 
-        fr = Fraction(ast.root['value'])
         if isinstance(ast.root['value'], Fraction):
+            fr = Fraction(ast.root['value'])
             res = f'\\frac{{{fr.numerator}}} {{{fr.denominator}}}'
+        if isinstance(ast.root['value'], float):
+            res = str(round(ast.root['value'], 3))
         if '_calc' in ast.root and ast.root['_calc'] == 'last':
             del ast.root['_calc']
             res = f'\\color{{green}}{{\\boxed{{{res}}}}}'
