@@ -1,9 +1,5 @@
-from fractions import Fraction
-
-from liblet import AnnotatedTreeWalker, Tree
-
 from core.config import PRIORITY
-from core.my_atw import MyAtw
+from ignore.my_atw import MyAtw
 from core.util import *
 
 

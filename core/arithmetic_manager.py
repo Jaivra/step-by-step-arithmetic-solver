@@ -2,12 +2,11 @@ from liblet import ANTLR
 
 from core.atw_ast_simpler import AtwAstSimpler
 from core.atw_block_generator import AtwBlockGenerator
-from core.atw_block_generator_old import AtwBlockGeneratorOld
 from core.atw_latex_formatter import AtwLatexFormatter
 from core.atw_ptree_to_ast import AtwPtreeToAst
 from core.atw_expr_eval import AtwEvalExpr
 from core.atw_block_priority import AtwBlockPriority
-from core.shunting_yard_parser_new import ShuntingYardParser
+from core.shunting_yard_parser import ShuntingYardParser
 from core.util import *
 
 

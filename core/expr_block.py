@@ -1,6 +1,6 @@
 import itertools
 
-from core.MalformedExpression import MalformedExpression
+from core.malformed_expression import MalformedExpression
 
 
 class PARENTH_TYPE:
@@ -39,27 +39,24 @@ class ExprBlock:
             return self._parenth_type
 
         block_types = set(block.block_type for block in sub_blocks)
-        parenth_types = set(block.parenth_type for block in sub_blocks) - {PARENTH_TYPE.UNKNOWN}
+        parenth_types = set(block.parenth_type for block in sub_blocks)
+        parenth_types_without_unknown = parenth_types - {PARENTH_TYPE.UNKNOWN}
 
-        #print((self._parenth_type, self._tree), '\n\n')
+        #print('****', (self._parenth_type, self._tree), '\n\n')
         #for block in self._sub_blocks:
         #    print((block.parenth_type, block.tree), '\n')
         #print('\n\n\n\n')
-        if len(parenth_types) == 0:
+
+        if len(parenth_types_without_unknown) <= 1:
+            if self._block_type == BLOCK_TYPE.INIT:
+                return parenth_types.pop()
+
             max_sub_blocks_grade = max(block_types)
-
-            if self._block_type > max_sub_blocks_grade:
+            if self._parenth_type == PARENTH_TYPE.SIMPLE and PARENTH_TYPE.FREE not in parenth_types and self._block_type > max_sub_blocks_grade:
                 return PARENTH_TYPE.SIMPLE
-
-            if self._block_type == max_sub_blocks_grade == BLOCK_TYPE.ROUND:
-                return PARENTH_TYPE.FREE
-
-        elif len(parenth_types) == 1:
-            parenth_ref = parenth_types.pop()
-            if parenth_ref == self._parenth_type: return parenth_ref
-            if self._parenth_type == PARENTH_TYPE.UNKNOWN and (parenth_ref == PARENTH_TYPE.SIMPLE or parenth_ref == PARENTH_TYPE.FREE):
-                return PARENTH_TYPE.FREE
-
+            elif self._parenth_type == PARENTH_TYPE.UNKNOWN:
+                if PARENTH_TYPE.SIMPLE not in parenth_types:
+                    return PARENTH_TYPE.FREE
         raise MalformedExpression(
             'Errore nell\'annidamento delle parentesi, regole di parentesizzazione non rispettate, ', [], [], []
         )

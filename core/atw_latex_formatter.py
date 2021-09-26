@@ -1,4 +1,4 @@
-from core.my_atw import MyAtw
+from ignore.my_atw import MyAtw
 from fractions import Fraction
 
 

@@ -1,12 +1,7 @@
-from fractions import Fraction
-
-from liblet import AnnotatedTreeWalker, Tree, Stack
-
-from core.block_depth import BlockDepth
-from core.my_atw import MyAtw
+from ignore.my_atw import MyAtw
 from core.util import *
 
-from operator import add, mul, truediv, sub
+from operator import add, mul, sub
 
 
 class AtwEvalExpr(MyAtw):
