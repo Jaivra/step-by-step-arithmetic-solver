@@ -2,6 +2,8 @@ from core.config import PRIORITY
 from core.my_atw import MyAtw
 from core.util import *
 
+
+# Restituisce il parent del nodo X che deve essere calcolato e ricalcola la priorità di ogni nodo dell'AST senza tener conto del nodo X
 class AtwBlockPriority(MyAtw):
     def __init__(self):
         super().__init__('type')
