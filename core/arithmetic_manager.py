@@ -22,9 +22,9 @@ class ArithManager:
 
 
     # Prende in input un'espressione e restituisce l'ast attraverso l'algoritmo Shunting-Yard
-    def shuntingYardExpr2ast(self, expr, simple=True):
+    def shuntingYardExpr2ast(self, expr):
         ast = self._shunting_yard_parser.parse(expr)
-        if simple: ast = self._atw_ast_simpler(ast)
+        ast = self._atw_ast_simpler(ast)
         return ast
 
     # prende in input un'AST e trova e restituisce una lista di blocchi con priorità (che si riferiscono alle sottoespressioni) secondo l'ordine di esecuzione
