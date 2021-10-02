@@ -28,7 +28,7 @@ MEMORY = dict(blocks)
 
 
 P possiamo passare alla valutazione step by step dell'espressione aritmetica.
-il metodo prior della classe ArithmeticManager ha il compito di
+Il metodo prior della classe ArithmeticManager ha il compito di
 * Annotare il noto che contiene l'espressione da calcolare
 * Annotare l'ast passato in input con le nuove priorità non considerando più l'espressione che sarà calcolata. *
 * Restituire il parent del nodo che si deve valutare in quello step

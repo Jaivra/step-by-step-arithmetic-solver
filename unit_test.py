@@ -1,13 +1,11 @@
 import unittest
-from fractions import Fraction
-
-from liblet import Tree
 
 from core.arithmetic_manager import ArithManager
 from core.expression_generator import generate_expression
 from core.my_exception import *
 from core.util import *
 import math
+
 
 class MyTester(unittest.TestCase):
 
@@ -26,9 +24,6 @@ class MyTester(unittest.TestCase):
         self.assertEqual(ast.__repr__().replace(' ', ''),
                          "({'type': 'main'}: ({'type': 'fractExpr', 'priority': 5}: ({'type': 'unaryExpr', 'op': '-', 'priority': 5}: ({'type': 'powExpr', 'priority': 5}: ({'type': 'atomExpr', 'value': 2, 'priority': 0}), ({'type': 'atomExpr', 'value': -2, 'priority': 0}))), ({'type': 'atomExpr', 'value': 3, 'priority': 0})))".replace(
                              ' ', ''))
-
-
-
 
     def test_blocks(self):
         AM_R = ArithManager('R')
@@ -117,12 +112,15 @@ class MyTester(unittest.TestCase):
 
         # (4/3 + 16 x 3) + 2, con appena calcolato il valore 16
         latex = AM_N.latex(main_block, MEM)
-        self.assertEqual(latex.replace(' ', ''),r'\color{blue}{\left(\frac{4}{3}+\color{red}{\boxed{\color{green}{\boxed{16}}\times3}}\right)}+2')
+        self.assertEqual(latex.replace(' ', ''),
+                         r'\color{blue}{\left(\frac{4}{3}+\color{red}{\boxed{\color{green}{\boxed{16}}\times3}}\right)}+2')
 
         # deve aver tolto l'annotazione _calc : last sul 16
-        self.assertEqual(MEM['38'].__repr__().replace(' ', ''), "({'type': 'roundBlockExpr', 'priority': 0}: ({'type': 'addSubExpr', 'op': '+', 'priority': 1}: ({'type': 'atomExpr', 'value': Fraction(4, 3), 'priority': 0}), ({'type': 'divProdExpr', 'op': 'x', 'priority': 0, '_calc': 'next'}: ({'type': 'atomExpr', 'value': 16, 'priority': 0}), ({'type': 'atomExpr', 'value': 3, 'priority': 0}))))".replace(' ', ''))
+        self.assertEqual(MEM['38'].__repr__().replace(' ', ''),
+                         "({'type': 'roundBlockExpr', 'priority': 0}: ({'type': 'addSubExpr', 'op': '+', 'priority': 1}: ({'type': 'atomExpr', 'value': Fraction(4, 3), 'priority': 0}), ({'type': 'divProdExpr', 'op': 'x', 'priority': 0, '_calc': 'next'}: ({'type': 'atomExpr', 'value': 16, 'priority': 0}), ({'type': 'atomExpr', 'value': 3, 'priority': 0}))))".replace(
+                             ' ', ''))
 
-    def test_expr_solver(self, count = 10):
+    def test_expr_solver(self, count=10):
         def solve(expr, domain):
             AM = ArithManager(domain)
             ast = AM.shuntingYardExpr2ast(expr)
@@ -146,7 +144,7 @@ class MyTester(unittest.TestCase):
         for _ in range(count):
             expr = generate_expression(2)
             try:
-                #print(expr)
+                # print(expr)
                 shunting_res = solve(expr, 'R')
             except Exception as e:
                 print('** EXCEPTION SHUNTING ** ', expr, e)
@@ -154,6 +152,7 @@ class MyTester(unittest.TestCase):
             formatted_expr = expr.replace('x', '*').replace(':', '/').replace('^', '**')
             res = eval(formatted_expr)
             self.assertEqual(math.isclose(res, shunting_res, rel_tol=1e-9, abs_tol=0.0), True)
+
 
 if __name__ == '__main__':
     tester = MyTester()
