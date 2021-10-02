@@ -41,7 +41,7 @@ def generate_expression(prob):
         p = random()
         if p > prob:
             return Number(randint(1, 100))
-        elif randint(0, 3) == 0:
+        elif randint(0, 3) == 5:
             return ParenthesizedExpression(generate_expression(prob / 1.2))
         else:
             left = generate_expression(prob / 1.2)

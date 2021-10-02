@@ -1,6 +1,6 @@
 import itertools
 
-from core.malformed_expression import MalformedExpression
+from core.my_exception import MalformedExpression
 
 
 class PARENTH_TYPE:

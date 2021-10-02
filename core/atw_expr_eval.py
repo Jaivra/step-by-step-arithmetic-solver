@@ -1,4 +1,5 @@
 from core.my_atw import MyAtw
+from core.my_exception import DomainError
 from core.util import *
 
 from operator import add, mul, sub
@@ -12,13 +13,16 @@ class AtwEvalExpr(MyAtw):
         ':': Fraction
     }
 
-    def __init__(self):
+    def __init__(self, domain_checker):
         super().__init__('type')
+        self._domain_checker = domain_checker
         self.MEMORY = {}
 
     def start(self, ast, memory):
         self.MEMORY = memory
-        return self(ast)
+        res = self(ast)
+        if not self._domain_checker(res): raise DomainError(res)
+        return res
 
     def _atw_atomExpr(self, ast):
         return ast.root['value']
@@ -40,9 +44,12 @@ class AtwEvalExpr(MyAtw):
         op = ast.root['op']
         left, right = self(left), self(right)
         if op == ':':
-            if right == 0: raise ZeroDivisionError(f'Division by 0 --> {left}:{right}')
-            elif isinstance(left, float) or isinstance(right, float): value = left / right
-            else: value = Fraction(left, right)
+            if right == 0:
+                raise ZeroDivisionError(f'Division by 0 --> {left}:{right}')
+            elif isinstance(left, float) or isinstance(right, float):
+                value = left / right
+            else:
+                value = Fraction(left, right)
         else:
             value = left * right
         return value
@@ -52,7 +59,7 @@ class AtwEvalExpr(MyAtw):
         left, right = ast.children
         left, right = self(left), self(right)
         if not isinstance(left, float) and isinstance(right, int):
-#            value = int(pow(left, right)) if right > 0 else Fraction(1, pow(left, -right))
+            #            value = int(pow(left, right)) if right > 0 else Fraction(1, pow(left, -right))
             value = pow(left, right) if right > 0 else Fraction(1, pow(left, -right))
         else:
             value = pow(left, right)

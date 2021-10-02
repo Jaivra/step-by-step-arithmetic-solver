@@ -3,7 +3,7 @@ import re
 
 from liblet import Stack, Tree
 
-from core.malformed_expression import MalformedExpression
+from core.my_exception import MalformedExpression
 from core.config import *
 from core.util import *
 

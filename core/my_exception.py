@@ -13,3 +13,7 @@ class MalformedExpression(SystemExit):
 
             res += c + ' '
         return f'{message}\n\n{res}'
+
+class DomainError(SystemExit):
+    def __init__(self, *args, **kwargs):  # real signature unknown
+        super().__init__(f'Expression Domain not allowed Error: {args[0]}')
