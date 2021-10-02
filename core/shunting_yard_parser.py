@@ -160,7 +160,6 @@ class ShuntingYardParser:
                 elif token == '{' and close_par == '}':
                     self.operand_st.push(Tree({'type': 'curlyBlockExpr', 'priority': 0}, [self.operand_st.pop()]))
                 elif token != '<' or close_par != '>':
-                    print(tokens_st.last_count)
                     raise MalformedExpression(
                         f"La parentesi in posizione {open_par_pos} non è stata chiusa!",
                         tokens,

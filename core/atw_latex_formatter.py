@@ -18,7 +18,7 @@ class AtwLatexFormatter(MyAtw):
 
         if isinstance(ast.root['value'], Fraction):
             fr = Fraction(ast.root['value'])
-            res = f'\\frac{{{fr.numerator}}} {{{fr.denominator}}}'
+            res = f'\\frac{{{fr.numerator}}}{{{fr.denominator}}}'
         if isinstance(ast.root['value'], float):
             res = str(round(ast.root['value'], 3))
         if '_calc' in ast.root and ast.root['_calc'] == 'last':
@@ -35,7 +35,7 @@ class AtwLatexFormatter(MyAtw):
 
         if '_calc' in ast.root and ast.root['_calc'] == 'next':
             return f'\\color{{red}}{{\\boxed{{{left}{op}{right}}}}}', True
-        return f'{left} {op} {right}', left_calculable or right_calculable
+        return f'{left}{op}{right}', left_calculable or right_calculable
 
     def _atw_divProdExpr(self, ast):
         op = ast.root['op']
@@ -50,7 +50,7 @@ class AtwLatexFormatter(MyAtw):
 
         if '_calc' in ast.root and ast.root['_calc'] == 'next':
             return f'\\color{{red}}{{\\boxed{{{left}{op}{right}}}}}', True
-        return f'{left} {op} {right}', left_calculable or right_calculable
+        return f'{left}{op}{right}', left_calculable or right_calculable
 
     def _atw_powExpr(self, ast):
         left, right = ast.children
@@ -76,8 +76,8 @@ class AtwLatexFormatter(MyAtw):
         right, right_calculable = self(right)
 
         if '_calc' in ast.root and ast.root['_calc'] == 'next':
-            return f'\\color{{red}}{{\\boxed{{\\frac{{{left}}} {{{right}}}}}}}', True
-        return f'\\frac{{{left}}} {{{right}}}', left_calculable or right_calculable
+            return f'\\color{{red}}{{\\boxed{{\\frac{{{left}}}{{{right}}}}}}}', True
+        return f'\\frac{{{left}}}{{{right}}}', left_calculable or right_calculable
 
     def _atw_roundBlockExpr(self, ast):
         child, calc = self(ast.children[0])

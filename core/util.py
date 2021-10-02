@@ -80,7 +80,7 @@ def create_domain_checker(domain):
         'N': is_natural,
         'Z': is_integer,
         'Q': lambda x: is_integer(x) or is_rational(x),
-        'R': lambda x: is_integer(x) or is_rational(x) or is_float(x)
+        'R': lambda x: is_integer(x) or is_rational(x) or is_float(x) or re.match(r'([+-]?(?:0|[1-9]\d*)(?:\.\d*)?(?:[eE][+\-]?\d+))$', x) #for scientific notation
     }
     def domain_checker(res):
         token = str(res)
