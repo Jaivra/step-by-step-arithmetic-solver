@@ -161,4 +161,4 @@ if __name__ == '__main__':
     tester.test_prior()
     tester.test_eval()
     tester.test_latex()
-    tester.test_expr_solver(500)
+    tester.test_expr_solver(100)
