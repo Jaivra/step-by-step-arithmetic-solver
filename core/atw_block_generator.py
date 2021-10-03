@@ -4,7 +4,11 @@ from core.expr_block import ExprBlock, BLOCK_TYPE
 from core.my_atw import MyAtw
 from core.util import *
 
-
+"""
+Classe per la suddivisione dell'AST dato in input in blocchi che rappresentano l'AST di una sottoespressione. 
+La lista di sottoespressioni restituita sarà ordinata secondo il grado di annidamento stabilito dal tipo di parentesizzazione.
+Per la suddivisione in blocchi viene utilizzato un oggeto di tipo ExprBlock.
+"""
 class AtwBlockGenerator(MyAtw):
 
     def __init__(self):
@@ -35,7 +39,7 @@ class AtwBlockGenerator(MyAtw):
     def _atw_curlyBlockExpr(self, ast):
         return self._blockExpr(ast, BLOCK_TYPE.CURLY)
 
-    def _blockExpr(self, ast, block_type):
+    def _blockExpr(self, ast, block_type): # Ha trovato una parentesi e quindi una sottoespressione
         sub_expr, blocks = self(ast.children[0])
 
         res = Tree(ast.root, [sub_expr])
