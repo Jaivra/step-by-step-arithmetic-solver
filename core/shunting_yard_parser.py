@@ -8,7 +8,14 @@ from core.config import *
 from core.util import *
 
 
+"""
+Implementazione dell'algoritmo ShuntingYard per restituire l'albero di parsing di un'espressione ricevuta in input
+prendendo spunto da https://www.engr.mun.ca/~theo/Misc/exp_parsing.htm
+"""
 class ShuntingYardParser:
+
+    # Implementazione dello Stack con l'aggiunta del cnt che rappresenta la posizione di un certo token inserito nello stack,
+    # necessario per fornire la posizione di un token non corretto al momento di un'eccezione
     class TokenStack(Stack):
         def __init__(self, *kwargs):
             super().__init__(*kwargs)
@@ -22,6 +29,7 @@ class ShuntingYardParser:
         def last_count(self):
             return self.cnt - 1
 
+    # Classe che rappresenta gli operatori, in particolare per il confronto di priorità fra operatori
     class OperatorInfo:
         def __init__(self, prec, assoc, operator_type):
             self._prec = prec
@@ -47,10 +55,10 @@ class ShuntingYardParser:
         ":": OperatorInfo(1, "L", "B"),
         "x": OperatorInfo(1, "L", "B"),
         "/": OperatorInfo(2, "L", "B"),
-        "++": OperatorInfo(3, "R", "U"),  # unconsidered
+        "++": OperatorInfo(3, "R", "U"),
         "--": OperatorInfo(3, "R", "U"),
         "^": OperatorInfo(4, "R", "B"),
-        "#": OperatorInfo(-1, '', 'S')
+        "#": OperatorInfo(-1, '', 'S') # Sentinella
     }
     SENTINEL = '#'
 
@@ -119,11 +127,11 @@ class ShuntingYardParser:
         self.operator_st.push(op)
 
     def parse(self, expr):
-        all_tokens = tokenize(expr)
+        all_tokens = tokenize(expr) # divisione in tokens
         tokens = []
         unary = True
 
-        for token in all_tokens:
+        for token in all_tokens: # Necessario per convertire i -,+ unari in --,++
             if unary and token in {'+', '-'}:
                 tokens.append(token * 2)
             else:
@@ -153,6 +161,7 @@ class ShuntingYardParser:
 
                 close_par = tokens_st.pop() if tokens_st else None
 
+                # Verifica che le parentesi corrispondano
                 if token == '(' and close_par == ')':
                     self.operand_st.push(Tree({'type': 'roundBlockExpr', 'priority': 0}, [self.operand_st.pop()]))
                 elif token == '[' and close_par == ']':
@@ -191,7 +200,7 @@ class ShuntingYardParser:
 
         self.operator_st.push(self.SENTINEL)
         E()
-        if tokens_st:
+        if tokens_st: # Caso in cui lo stack a fine parsing sia vuoto, e quindi l'espressione non è corrretta
             raise MalformedExpression(
                 f'Token  "{tokens_st.pop()}" in posizione "{tokens_st.last_count}" non valido',
                 tokens,

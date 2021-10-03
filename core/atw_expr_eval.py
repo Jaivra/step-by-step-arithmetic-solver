@@ -4,7 +4,11 @@ from core.util import *
 
 from operator import add, mul, sub
 
-
+"""
+Valutatore di espressioni.
+Riceve in input un AST un dizionario e restituisce in output il valore che si ottiene calcolando l'espressione aritmetica.
+Il dizionario in input contiene i risultati (nel caso ce ne fossero) delle sottoespressioni precedentemente calcolate.
+"""
 class AtwEvalExpr(MyAtw):
     ARITH_OP = {
         '+': add,
@@ -27,6 +31,7 @@ class AtwEvalExpr(MyAtw):
     def _atw_atomExpr(self, ast):
         return ast.root['value']
 
+    # Recupera il valore della sottoespressione dal dizionario
     def _atw_subExpr(self, ast):
         return self.MEMORY[ast.root['ID']].root['value']
 

@@ -6,7 +6,10 @@ from fractions import Fraction
 
 from liblet import Tree
 
-
+"""
+Classe che rappresenta un Walker, molto simile a quella di LibLet, 
+solo che in questo modo non devo registrare i metodi per la gestione di un nodo, ma basta che rispettino un certo nome.
+"""
 class MyAtw:
 
     def __init__(self, key):

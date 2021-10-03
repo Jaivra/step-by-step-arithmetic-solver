@@ -1,6 +1,9 @@
 class Expression:
     pass
 
+"""
+Generatore di espressioni aritmetiche
+"""
 class Number(Expression):
     def __init__(self, num):
         self.num = num

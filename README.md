@@ -23,8 +23,8 @@ ast = AM.shuntingYardExpr2ast(expr)
 
 Nota: l'espressione deve seguire il formato definito nelle specifiche.
 Per definire una sottoespressione senza utilizzare le parentesi "aritmetiche" (graffe, quadre e tonde) è possibile utilizzare le parentesi < expr >.
-
-<img src="https://render.githubusercontent.com/render/math?math=\frac{2+3}{4 + 5 \times 6}">
+Ad esempio, < 2 + 3 > / < 4 x 6 > rappresenta la seguente espressione:  
+<img src="https://render.githubusercontent.com/render/math?math=\frac{2+3}{45 \times 6}">
 
 
 ### Generazione blocchi di sottoespressioni

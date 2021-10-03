@@ -32,6 +32,8 @@ def block2ast(main_block, memory):
 
 
 def check_type(f):
+    # Funzione che riceve in input un numero e restituisce il valore corrispondente al dominio di "difficoltà" minore,
+    # dove la difficoltà è N, Z < Q < R
     def check_type_aux(*x):
         res = f(*x)
         if isinstance(res, Fraction) and res.denominator != 1:
@@ -69,12 +71,13 @@ def is_float(token):
 
 
 
-
+# Riceve in input un'espressione e restiuisce una lista di tokens
 def tokenize(expr):
     reg = r'\d+(?:\.\d+)?|[^ 0-9|\.]'
     return re.findall(reg, ''.join(expr.split()))
 
 
+# crea la funzione per il controllo dell'appartenenza di un numero ad un dominio dato in input
 def create_domain_checker(domain):
     DISPATCH_DOMAIN_TABLE = {
         'N': is_natural,

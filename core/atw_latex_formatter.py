@@ -1,7 +1,11 @@
 from core.my_atw import MyAtw
 from fractions import Fraction
 
-
+"""
+Walker che riceve in input un AST di un espressione e un dizionario contenente i vari risultati delle sottoespressioni. 
+Ha il compito di restituire la stringa latex formattata corrispondente all'espressione.
+Sarà utilizzato sempre passando il blocco contenente l'espressione completa.
+"""
 class AtwLatexFormatter(MyAtw):
 
     def __init__(self):
@@ -97,6 +101,7 @@ class AtwLatexFormatter(MyAtw):
             return f'\\color{{blue}}{{\\left\\{{{child}\\right\\}}}}', False
         return f'\\left\\{{{child}\\right\\}}', False
 
+    # Recupera la sottoespressione dalla memoria
     def _atw_subExpr(self, ast):
         return self(self._MEMORY[ast.root['ID']])
 

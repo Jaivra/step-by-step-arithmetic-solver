@@ -39,8 +39,9 @@ class AtwAstSimpler(MyAtw):
             if not self._domain_checker(subexpr.root['value']): raise DomainError(subexpr.root['value'])
             return subexpr
         if is_atom(subexpr): # Nel caso di - unario davanti ad un atomo (numero), lo considera come un valore all'ìnterno del dominio Z
-            if not self._domain_checker(-subexpr.root['value']): raise DomainError(subexpr.root['value'])
-            return Tree({'type': 'atomExpr', 'value': -subexpr.root['value'], 'priority': 0}, [])
+            value = -subexpr.root['value']
+            if not self._domain_checker(value): raise DomainError(value)
+            return Tree({'type': 'atomExpr', 'value': value, 'priority': 0}, [])
         return AtwAstSimpler._generate_tree_with_priority(ast, [subexpr])
 
     def _atw_fractExpr(self, ast):
