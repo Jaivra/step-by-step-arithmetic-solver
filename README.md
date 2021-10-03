@@ -1,6 +1,6 @@
 # Progetto di Linguaggi e Traduttori Valerio Cislaghi
 
-## Utilizzo
+## Procedimento
 
 ### Creazione Manager
 
@@ -9,7 +9,7 @@ Creare un oggetto di tipo ArithmeticManager(*domain*) che riceve il dominio in c
 possibili domini: 'N', 'Z', 'Q', 'R'
 
 <pre>
-AM = ArithmeticManager('Q')
+AM = ArithManager('Q')
 </pre>
 
 
