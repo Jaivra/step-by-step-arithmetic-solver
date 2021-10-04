@@ -5,9 +5,9 @@ from core.my_atw import MyAtw
 from core.util import *
 
 """
-Classe per la suddivisione dell'AST dato in input in blocchi che rappresentano l'AST di una sottoespressione. 
+Classe per la suddivisione dell'AST dato in input in blocchi ognuno dei quali rappresenta l'AST di una sottoespressione. 
 La lista di sottoespressioni restituita sarà ordinata secondo il grado di annidamento stabilito dal tipo di parentesizzazione.
-Per la suddivisione in blocchi viene utilizzato un oggeto di tipo ExprBlock.
+Per la suddivisione in blocchi viene utilizzato un oggetto di tipo ExprBlock.
 """
 class AtwBlockGenerator(MyAtw):
 

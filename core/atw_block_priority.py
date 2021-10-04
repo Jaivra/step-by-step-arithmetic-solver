@@ -4,7 +4,7 @@ from core.util import *
 
 
 """ 
-Classe che dato un AST, restituisce il parent del nodo che dovrà essere calcolato nel prossimo step.
+Classe che dato un AST, restituisce il parent del nodo che rappresenta l'espressione da calcolare nel prossimo step.
 Inoltre ricalcola e annota l'AST ricevuto in input con le nuove priorità delle operazioni senza tenere conto della prossima operazione da calcolare.
 """
 class AtwBlockPriority(MyAtw):

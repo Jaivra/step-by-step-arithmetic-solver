@@ -4,7 +4,8 @@ from core.my_exception import DomainError
 from core.util import *
 
 """
-Questa classe si occupa di attuare semplificazioni all'espressione aritmetica e di annotare l'albero sintattico con le priorità di esecuzione di ciascuna operazione
+Questa classe si occupa di attuare semplificazioni sull'AST dell'espressione aritmetica 
+e di annotare l'albero sintattico con le priorità di esecuzione di ciascuna operazione
 """
 class AtwAstSimpler(MyAtw):
 

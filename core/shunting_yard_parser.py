@@ -9,8 +9,8 @@ from core.util import *
 
 
 """
-Implementazione dell'algoritmo ShuntingYard per restituire l'albero di parsing di un'espressione ricevuta in input
-prendendo spunto da https://www.engr.mun.ca/~theo/Misc/exp_parsing.htm
+Implementazione dell'algoritmo ShuntingYard per restituire l'albero di parsing di un'espressione ricevuta in input.
+Implementazione realizzata prendendo spunto da https://www.engr.mun.ca/~theo/Misc/exp_parsing.htm
 """
 class ShuntingYardParser:
 

@@ -6,7 +6,7 @@ from operator import add, mul, sub
 
 """
 Valutatore di espressioni.
-Riceve in input un AST un dizionario e restituisce in output il valore che si ottiene calcolando l'espressione aritmetica.
+Riceve in input un AST e un dizionario e restituisce in output il valore che si ottiene calcolando l'espressione aritmetica.
 Il dizionario in input contiene i risultati (nel caso ce ne fossero) delle sottoespressioni precedentemente calcolate.
 """
 class AtwEvalExpr(MyAtw):
