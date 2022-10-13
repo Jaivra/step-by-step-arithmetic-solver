@@ -1,7 +1,7 @@
 # Project of formal languages and compiler Course 
 Specifics available [here](https://github.com/let-unimi/progetti/tree/master/02-Simplicio)
 ## Requirements
-* Installation of requirements.txt with PIP
+* Installation of requirements.txt with pip
 * Download ANTLR4 and set environment variable ANTLR4_JAR to the downloaded jar 
 
 ## How to use it
