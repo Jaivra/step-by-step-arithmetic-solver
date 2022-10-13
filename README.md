@@ -1,12 +1,14 @@
-# Progetto di Linguaggi e Traduttori Valerio Cislaghi
+# Project of formal languages and compiler Course 
+Specifics available [here](https://github.com/let-unimi/progetti/tree/master/02-Simplicio)
+## Requirements
+* Installation of requirements.txt with PIP
+* Download ANTLR4 and set environment variable ANTLR4_JAR to the downloaded jar 
 
-## Procedimento
+## How to use it
+### Manager Creation
 
-### Creazione Manager
-
-Creare un oggetto di tipo ArithmeticManager(*domain*) che riceve il dominio in cui l'espressione aritmetica deve essere valutata
-
-possibili domini: 'N', 'Z', 'Q', 'R'
+Create an ArithmeticManager(*domain*) object that receives in the constructor the domain of the expression.
+Possibile domains: 'N', 'Z', 'Q', 'R'
 
 <pre>
 AM = ArithManager('Q')
@@ -14,30 +16,33 @@ AM = ArithManager('Q')
 
 
 ### Parser
-Per il parsing di un'espressione chiamare il metodo shuntingYardExpr2ast della classe ArithmeticManager, il quale restituirà un AST con annotazioni riguardo la priorità di ogni espressione per guidare il walker alla valutazione step by step.
+For the expression parsing call the shuntingYardExpr2ast method of class ArithmeticManager, that returns an AST with annotaion about the property of each expression to guide  step by step the walker to the valutation.
 
 <pre>
 ast = AM.shuntingYardExpr2ast(expr)
 </pre>
 
 
-Nota: l'espressione deve seguire il formato definito nelle specifiche.
-Per definire una sottoespressione senza utilizzare le parentesi "aritmetiche" (graffe, quadre e tonde) è possibile utilizzare le parentesi < expr >.
+Note: The expression must follow the format defined in the specifics.
+To define a sub-expression without using the arithmetic brackets, it's possible to use the symbolds < expr >.
+For example:  < 2 + 3 > / < 4 x 6 > represents the following expression:
+<img src="https://render.githubusercontent.com/render/math?math=\frac{2+3}{45 \times 6}">
+
+Per definire una sottoespressione senza utilizzare le arithmetic squares (graffe, quadre e tonde) è possibile utilizzare le parentesi < expr >.
 Ad esempio, < 2 + 3 > / < 4 x 6 > rappresenta la seguente espressione:  
 <img src="https://render.githubusercontent.com/render/math?math=\frac{2+3}{45 \times 6}">
 
 
-### Generazione blocchi di sottoespressioni
+### Generation Blocks of sub-expressions
+Using the blocks method of class ArithmeticManager to split the expressions in different blocks, each block is the AST of a sub-expression.
+The returned list of subexpressions will be sorted according to the degree of nesting established by the parenthesization type.
+So, the first sub-expression of the list will be the one to execute first. 
+The blocks method, within it, uses an object of type ExprBlock for subdivision into blocks and to make inference on the type of parenthesis adopted in the expression and possibly throws an exception if the parenthesis is not allowed (another option was to do it directly in the parser).
 
-Utilizzare il metodo blocks della classe ArithmeticManager per suddividere l'espressioni in blocchi, ogni blocco non sarà altro che l'AST di una sottoespressione.
-La lista di sottoespressioni restituita sarà ordinata secondo il grado di annidamento stabilito dal tipo di parentesizzazione. Quindi la prima sottoespressione della lista sarà quella da eseguire per prima.
-Il metodo blocks, al suo interno, utilizza un oggetto di tipo ExprBlock per la suddivisione in blocchi e per fare inferenza sul tipo di parentesizzazione adottato nell'espressione ed eventualmente lancia un'eccezione nel caso in cui la parentesizzazione non sia consentita (un'altra opzione era farlo direttamente nel parser).
+When an expression A contains inside a sub-expression B, the AST of A will contain a block to identify the sub-expression (AST) of B through an identifier (see the diagram below).
+In this way, for the evaluation of a subexpression it will not be necessary to visit the AST of the whole expression, but only the AST corresponding to that subexpression.
 
-Quando un'espressione A contiene al suo interno una sottoespressione B, l'AST di A conterrà un blocco che identifica univocamente attraverso un ID che identifica la sottoespressione (l'AST) di B (guarda lo schema sotto).
-In questo modo per la valutazione di una sottoespressione non sarà necessario visitare l'AST di tutta l'espressione, ma solo l'ast corrispondente a quella sottoespressione.
-
-Dovrà essere utilizzata una memoria aggiuntiva per contenere i risultati delle sottoespressioni già valutate.
-
+Additional memory will need to be used to hold the results of subexpressions that have already been evaluated.
 <pre>
 blocks = AM.blocks(ast)
 MEMORY = dict(blocks)
@@ -45,19 +50,20 @@ MEMORY = dict(blocks)
 
 ### Valutazione step by step
 
-Dopo aver svolto i passi precedenti è possibile passare alla valutazione step by step dell'espressione aritmetica.
+After carrying out the previous steps, it is possible to move on to the step by step evaluation of the arithmetic expression.
 
-Per ogni passo di valutazione sarà necessario chiamare il metodo prior della classe ArithmeticManager, che ha il compito di:
-* Annotare il nodo dell'AST contenente la sottoespressione da valutare.
-* Annotare l'AST passato in input con le nuove priorità non considerando più l'espressione che sarà calcolata (quella del punto precedente).
-* Restituire il parent del nodo che si deve valutare in quello specifico step.
+For each evaluation step it will be necessary to call the prior method of the ArithmeticManager class, which has the task of:
+* Annotate the AST node containing the subexpression to be evaluated.
+* Annotate the AST passed in input with the new priorities, no longer considering the expression that will be calculated (that of the previous point).
+* Return the parent of the node to be evaluated in that specific step.
 
-Le annotazioni sull'AST definite dal metodo prior serviranno anche al metodo latex (che stampa l'espressione corrente secondo le regole stabilite) per la formattazione del testo.
+The annotations on the AST defined by the prior method will also be used by the latex method (which prints the current expression according to the established rules) for formatting the text.
 
-Il metodo eval riceve in input un AST e il dizionario che rappresenta la "memoria di esecuzione" (nel caso in cui debba essere valutata un'espressione che contiene una sottoespressione al suo interno).
-Restituisce in output il valore ottenuto valutando l'espressione.
+The eval method receives as input an AST and the dictionary which represents the "execution memory" (in case an expression that contains a sub-expression inside it is to be evaluated).
+Returns the value obtained by evaluating the expression as output.
 
-Ogni passo va ripetuto finchè esistono espressioni da valutare.
+Each step must be repeated as long as there are expressions to be evaluated.
+
 <pre>
 while blocks:
     block_id, current_block = blocks[0]
