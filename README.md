@@ -48,7 +48,7 @@ blocks = AM.blocks(ast)
 MEMORY = dict(blocks)
 </pre>
 
-### Valutazione step by step
+### Step by step valutation
 
 After carrying out the previous steps, it is possible to move on to the step by step evaluation of the arithmetic expression.
 
